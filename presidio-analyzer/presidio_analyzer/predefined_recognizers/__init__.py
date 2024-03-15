@@ -5,7 +5,9 @@ from presidio_analyzer.predefined_recognizers.transformers_recognizer import (
 )
 from .aba_routing_recognizer import AbaRoutingRecognizer
 from .credit_card_recognizer import CreditCardRecognizer
+from .credit_card_expiry_recognizer import CreditCardExpiryRecognizer
 from .crypto_recognizer import CryptoRecognizer
+from .date_of_birth_recognizer import DateOfBirthRecognizer
 from .date_recognizer import DateRecognizer
 from .email_recognizer import EmailRecognizer
 from .es_nif_recognizer import EsNifRecognizer
@@ -49,7 +51,9 @@ NLP_RECOGNIZERS = {
 __all__ = [
     "AbaRoutingRecognizer",
     "CreditCardRecognizer",
+    "CreditCardExpiryRecognizer",
     "CryptoRecognizer",
+    "DateOfBirthRecognizer",
     "DateRecognizer",
     "EmailRecognizer",
     "IbanRecognizer",
