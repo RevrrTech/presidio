@@ -9,6 +9,7 @@ from typing import Tuple
 from flask import Flask, request, jsonify, Response
 from werkzeug.exceptions import HTTPException
 
+from presidio_analyzer.nlp_engine import NlpEngineProvider
 from presidio_analyzer.analyzer_engine import AnalyzerEngine
 from presidio_analyzer.analyzer_request import AnalyzerRequest
 
@@ -37,6 +38,12 @@ class Server:
         self.logger.setLevel(os.environ.get("LOG_LEVEL", self.logger.level))
         self.app = Flask(__name__)
         self.logger.info("Starting analyzer engine")
+        # TODO : After first version move to advanced models from spacy
+        # conf_file = Path(Path(__file__).parent, "conf", "transformers.yaml")
+        # self.logger.info(conf_file)
+        # provider = NlpEngineProvider(conf_file=conf_file)
+        # nlp_engine = provider.create_engine()
+        # self.engine = AnalyzerEngine(nlp_engine=nlp_engine, supported_languages=["en"])
         self.engine = AnalyzerEngine()
         self.logger.info(WELCOME_MESSAGE)
 

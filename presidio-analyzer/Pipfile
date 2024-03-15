@@ -16,6 +16,8 @@ azure-ai-textanalytics = "*"
 azure-core = "*"
 # stanza = "*"
 # spacy-stanza = "*"
+transformers = "*"
+detect-secrets = "*"
 
 [dev-packages]
 pytest = "*"
