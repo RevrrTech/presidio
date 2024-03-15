@@ -55,6 +55,7 @@ class CreditCardExpiryRecognizer(PatternRecognizer):
     CONTEXT = [
         "credit",
         "card",
+        "cc",
         "visa",
         "mastercard",
         "cc ",

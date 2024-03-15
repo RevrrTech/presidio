@@ -68,14 +68,12 @@ def test_when_all_dates_then_succeed(
     max_score,
 ):
     results = recognizer.analyze(text, entities)
-    print("results: ", results)
     assert len(results) == expected_len
     for res, (st_pos, fn_pos), (st_score, fn_score) in zip(
         results, expected_positions, expected_score_ranges
     ):
         if fn_score == "max":
             fn_score = max_score
-        print(f"entity: {entities[0]}, start position: {st_pos}, end position: {fn_pos}, start score: {st_score}, end score: {fn_score}")
         assert_result_within_score_range(
             res, entities[0], st_pos, fn_pos, st_score, fn_score
         )

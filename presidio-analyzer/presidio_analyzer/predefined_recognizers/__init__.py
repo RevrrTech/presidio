@@ -6,6 +6,7 @@ from presidio_analyzer.predefined_recognizers.transformers_recognizer import (
 from .aba_routing_recognizer import AbaRoutingRecognizer
 from .credit_card_recognizer import CreditCardRecognizer
 from .credit_card_expiry_recognizer import CreditCardExpiryRecognizer
+from .credit_card_cvv_recognizer import CreditCardCVVRecognizer
 from .crypto_recognizer import CryptoRecognizer
 from .date_of_birth_recognizer import DateOfBirthRecognizer
 from .date_recognizer import DateRecognizer
@@ -52,6 +53,7 @@ __all__ = [
     "AbaRoutingRecognizer",
     "CreditCardRecognizer",
     "CreditCardExpiryRecognizer",
+    "CreditCardCVVRecognizer",
     "CryptoRecognizer",
     "DateOfBirthRecognizer",
     "DateRecognizer",
