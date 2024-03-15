@@ -47,6 +47,7 @@ from presidio_analyzer.predefined_recognizers import (
     PlPeselRecognizer,
     InAadhaarRecognizer,
     InVehicleRegistrationRecognizer,
+    SecretsRecognizer
 )
 
 logger = logging.getLogger("presidio-analyzer")
@@ -125,6 +126,7 @@ class RecognizerRegistry:
                 MedicalLicenseRecognizer,
                 PhoneRecognizer,
                 UrlRecognizer,
+                SecretsRecognizer
             ],
         }
         for lang in languages:
