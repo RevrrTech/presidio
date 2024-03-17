@@ -10,6 +10,7 @@ from presidio_analyzer.nlp_engine.transformers_nlp_engine import (
 )
 
 import yaml
+from presidio_analyzer.predefined_recognizers.config import PHI_TRANSFORMERS_CONFIG
 
 from presidio_analyzer import EntityRecognizer, PatternRecognizer
 from presidio_analyzer.nlp_engine import NlpEngine, SpacyNlpEngine, StanzaNlpEngine
@@ -50,7 +51,8 @@ from presidio_analyzer.predefined_recognizers import (
     PlPeselRecognizer,
     InAadhaarRecognizer,
     InVehicleRegistrationRecognizer,
-    SecretsRecognizer
+    SecretsRecognizer,
+    PHITransformersRecognizer
 )
 
 logger = logging.getLogger("presidio-analyzer")
@@ -150,6 +152,14 @@ class RecognizerRegistry:
                 for rc in recognizers_map.get("ALL", [])
             ]
             self.recognizers.extend(all_recognizers)
+
+            # Adding PHI Recognizer for transformers to the recognizers list
+            model_path = PHI_TRANSFORMERS_CONFIG["DEFAULT_MODEL_PATH"]
+            supported_entities = PHI_TRANSFORMERS_CONFIG["PRESIDIO_SUPPORTED_ENTITIES"]
+            phi_transformers_recognizer = PHITransformersRecognizer(model_path=model_path, supported_entities=supported_entities)
+            phi_transformers_recognizer.load_transformer(**PHI_TRANSFORMERS_CONFIG)
+            self.recognizers.append(phi_transformers_recognizer)
+
             if nlp_engine:
                 nlp_recognizer_inst = nlp_recognizer(
                     supported_language=lang,
