@@ -157,7 +157,7 @@ class RecognizerRegistry:
             model_path = PHI_TRANSFORMERS_CONFIG["DEFAULT_MODEL_PATH"]
             supported_entities = PHI_TRANSFORMERS_CONFIG["PRESIDIO_SUPPORTED_ENTITIES"]
             phi_transformers_recognizer = PHITransformersRecognizer(model_path=model_path, supported_entities=supported_entities)
-            phi_transformers_recognizer.load_transformer(**PHI_TRANSFORMERS_CONFIG)
+            #phi_transformers_recognizer.load_transformer(**PHI_TRANSFORMERS_CONFIG)
             self.recognizers.append(phi_transformers_recognizer)
 
             if nlp_engine:
