@@ -1,3 +1,55 @@
+PHI_TRANSFORMERS_CONFIG_STANFORD = {
+    "DEFAULT_MODEL_PATH": "StanfordAIMI/stanford-deidentifier-base",
+    "PRESIDIO_SUPPORTED_ENTITIES": [
+        "PATIENT",
+        "PRACTITIONER",
+        "DATE_TIME",
+        "PHONE_NUMBER",
+        "ID",
+        "ORGANIZATION",
+        "AGE"
+    ],
+    "LABELS_TO_IGNORE": ["O"],
+    "DEFAULT_EXPLANATION": "Identified as {} by the StanfordAIMI/stanford-deidentifier-base NER model",
+    "SUB_WORD_AGGREGATION": "simple",
+    "DATASET_TO_PRESIDIO_MAPPING": {
+        "DATE": "DATE_TIME",
+        "DOCTOR": "PRACTITIONER",
+        "PATIENT": "PATIENT",
+        "HOSPITAL": "ORGANIZATION",
+        "MEDICALRECORD": "ID",
+        "IDNUM": "ID",
+        "ORGANIZATION": "ORGANIZATION",
+        "ZIP": "LOCATION",
+        "PHONE": "PHONE_NUMBER",
+        "USERNAME": "ID",
+        "STREET": "LOCATION",
+        "PROFESSION": "PROFESSION",
+        "COUNTRY": "LOCATION",
+        "LOCATION-OTHER": "LOCATION",
+        "FAX": "PHONE_NUMBER",
+        "EMAIL": "EMAIL",
+        "STATE": "LOCATION",
+        "DEVICE": "DEVICE",
+        "ORG": "ORGANIZATION",
+        "AGE": "AGE",
+    },
+    "MODEL_TO_PRESIDIO_MAPPING": {
+        "PATIENT": "PATIENT",
+        "HCW": "PRACTITIONER",
+        "HOSPITAL": "ORGANIZATION",
+        "ID":"ID",
+        "DATE": "DATE_TIME",
+        "PHONE": "PHONE_NUMBER",
+        "VENDOR": "ORGANIZATION",
+        "AGE": "AGE"
+    },
+    "CHUNK_OVERLAP_SIZE": 40,
+    "CHUNK_SIZE": 600,
+    "ID_SCORE_MULTIPLIER": 0.4,
+    "ID_ENTITY_NAME": "ID"
+}
+
 PHI_TRANSFORMERS_CONFIG = {
     "PRESIDIO_SUPPORTED_ENTITIES": [
         "PATIENT",
@@ -14,7 +66,7 @@ PHI_TRANSFORMERS_CONFIG = {
     "DEFAULT_MODEL_PATH": "obi/deid_roberta_i2b2",
     "LABELS_TO_IGNORE": ["O"],
     "DEFAULT_EXPLANATION": "Identified as {} by the obi/deid_roberta_i2b2 NER model",
-    "SUB_WORD_AGGREGATION": "simple",
+    "SUB_WORD_AGGREGATION": "first",
     "DATASET_TO_PRESIDIO_MAPPING": {
         "PATIENT": "PATIENT",
         "STAFF": "PRACTITIONER",

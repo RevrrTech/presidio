@@ -10,7 +10,7 @@ from presidio_analyzer.nlp_engine.transformers_nlp_engine import (
 )
 
 import yaml
-from presidio_analyzer.predefined_recognizers.config import PHI_TRANSFORMERS_CONFIG
+from presidio_analyzer.predefined_recognizers.config import PHI_TRANSFORMERS_CONFIG, PHI_TRANSFORMERS_CONFIG_STANFORD
 
 from presidio_analyzer import EntityRecognizer, PatternRecognizer
 from presidio_analyzer.nlp_engine import NlpEngine, SpacyNlpEngine, StanzaNlpEngine
@@ -153,11 +153,16 @@ class RecognizerRegistry:
             ]
             self.recognizers.extend(all_recognizers)
 
-            # Adding PHI Recognizer for transformers to the recognizers list
-            model_path = PHI_TRANSFORMERS_CONFIG["DEFAULT_MODEL_PATH"]
-            supported_entities = PHI_TRANSFORMERS_CONFIG["PRESIDIO_SUPPORTED_ENTITIES"]
+            # Adding PHI Recognizer for transformers to the recognizers list(Robert Model)
+            # model_path = PHI_TRANSFORMERS_CONFIG["DEFAULT_MODEL_PATH"]
+            # supported_entities = PHI_TRANSFORMERS_CONFIG["PRESIDIO_SUPPORTED_ENTITIES"]
+            # phi_transformers_recognizer = PHITransformersRecognizer(model_path=model_path, supported_entities=supported_entities)
+            # phi_transformers_recognizer.load_transformer(**PHI_TRANSFORMERS_CONFIG)
+            # Adding PHI Recognizer for transformers to the recognizers list(Stanford Model)
+            model_path = PHI_TRANSFORMERS_CONFIG_STANFORD["DEFAULT_MODEL_PATH"]
+            supported_entities = PHI_TRANSFORMERS_CONFIG_STANFORD["PRESIDIO_SUPPORTED_ENTITIES"]
             phi_transformers_recognizer = PHITransformersRecognizer(model_path=model_path, supported_entities=supported_entities)
-            phi_transformers_recognizer.load_transformer(**PHI_TRANSFORMERS_CONFIG)
+            phi_transformers_recognizer.load_transformer(**PHI_TRANSFORMERS_CONFIG_STANFORD)
             self.recognizers.append(phi_transformers_recognizer)
 
             if nlp_engine:

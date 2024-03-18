@@ -48,7 +48,7 @@ class PHITransformersRecognizer(EntityRecognizer):
 
     def __init__(
         self,
-        model_path: Optional[str] = PHI_TRANSFORMERS_CONFIG["DEFAULT_MODEL_PATH"],
+        model_path: Optional[str] = None,
         pipeline: Optional[TokenClassificationPipeline] = None,
         supported_entities: Optional[List[str]] = None,
     ):
@@ -100,7 +100,7 @@ class PHITransformersRecognizer(EntityRecognizer):
         self.text_overlap_length = kwargs.get("CHUNK_OVERLAP_SIZE", 40)
         self.chunk_length = kwargs.get("CHUNK_SIZE", 600)
         self.id_entity_name = kwargs.get("ID_ENTITY_NAME", "ID")
-        self.id_score_reduction = kwargs.get("ID_SCORE_REDUCTION", 0.5)
+        self.id_score_reduction = kwargs.get("ID_SCORE_REDUCTION", 1)
 
         if not self.pipeline:
             if not self.model_path:
@@ -224,7 +224,7 @@ class PHITransformersRecognizer(EntityRecognizer):
                 f"splitting the text into chunks, length {text_length} > {model_max_length}"
             )
             predictions = list()
-            chunk_indexes = TransformersRecognizer.split_text_to_word_chunks(
+            chunk_indexes = PHITransformersRecognizer.split_text_to_word_chunks(
                 text_length, self.chunk_length, self.text_overlap_length
                 )
 
