@@ -2,6 +2,8 @@
 import json
 import logging
 import os
+import torch
+
 from logging.config import fileConfig
 from pathlib import Path
 from typing import Tuple
@@ -12,6 +14,8 @@ from werkzeug.exceptions import HTTPException
 from presidio_analyzer.nlp_engine import NlpEngineProvider
 from presidio_analyzer.analyzer_engine import AnalyzerEngine
 from presidio_analyzer.analyzer_request import AnalyzerRequest
+from prompt_injection import PromptInjection
+from prompt_injection.prompt_injection import MatchType
 
 DEFAULT_PORT = "3000"
 
@@ -38,13 +42,6 @@ class Server:
         self.logger.setLevel(os.environ.get("LOG_LEVEL", self.logger.level))
         self.app = Flask(__name__)
         self.logger.info("Starting analyzer engine")
-        # TODO : After first version move to advanced models from spacy
-        # conf_file = Path(Path(__file__).parent, "conf", "transformers.yaml")
-        # self.logger.info(conf_file)
-        # provider = NlpEngineProvider(conf_file=conf_file)
-        # nlp_engine = provider.create_engine()
-        # self.engine = AnalyzerEngine(nlp_engine=nlp_engine, supported_languages=["en"])
-        self.engine = AnalyzerEngine()
         self.logger.info(WELCOME_MESSAGE)
 
         @self.app.route("/health")
@@ -98,6 +95,20 @@ class Server:
                 )
                 return jsonify(error=e.args[0]), 500
 
+        
+        @self.app.route("/prompt-injection/verify", methods=["POST"])
+        def detect_prompt_injection():
+            data = request.get_json()
+            prompt = data.get('prompt')
+            if not prompt:
+                return jsonify({'error': 'No text provided'}), 400
+
+            scanner = PromptInjection(threshold=0.9, match_type=MatchType.FULL)
+            _, is_valid, _ = scanner.scan(prompt)
+
+            return jsonify({'isPromptSafe': is_valid}), 200
+
+        
         @self.app.route("/recognizers", methods=["GET"])
         def recognizers() -> Tuple[str, int]:
             """Return a list of supported recognizers."""
