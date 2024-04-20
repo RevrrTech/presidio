@@ -17,7 +17,7 @@ from presidio_analyzer.analyzer_request import AnalyzerRequest
 from prompt_injection import PromptInjection
 from prompt_injection.prompt_injection import MatchType
 
-DEFAULT_PORT = "3000"
+DEFAULT_PORT = "5002"
 
 LOGGING_CONF_FILE = "logging.ini"
 
@@ -42,6 +42,7 @@ class Server:
         self.logger.setLevel(os.environ.get("LOG_LEVEL", self.logger.level))
         self.app = Flask(__name__)
         self.logger.info("Starting analyzer engine")
+        self.engine = AnalyzerEngine()
         self.logger.info(WELCOME_MESSAGE)
 
         @self.app.route("/health")
